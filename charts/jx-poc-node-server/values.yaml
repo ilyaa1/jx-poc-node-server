@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: draft
-  tag: dev
+  repository: 10.63.240.206:5000/ilyaa1/jx-poc-node-server
+  tag: 0.0.2
   pullPolicy: IfNotPresent
 service:
   name: jx-poc-node-server
