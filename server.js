@@ -1,21 +1,34 @@
 
-var http = require('http');
-var fileSystem = require('fs');
+const http = require('http');
+const fileSystem = require('fs');
+const express = require('express');
+const app = express();
 
-var server = http.createServer(function(req, resp){
+app.get('/', (req, res) => {
 	fileSystem.readFile('./index.html', function(error, fileContent){
 		if(error){
-			resp.writeHead(500, {'Content-Type': 'text/plain'});
-			resp.end('Error');
+			res.writeHead(500, {'Content-Type': 'text/plain'});
+			res.end('Error');
 		}
 		else{
-			resp.writeHead(200, {'Content-Type': 'text/html'});
-			resp.write(fileContent);
-			resp.end();
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			res.write(fileContent);
+			res.end();
 		}
 	});
 });
 
-server.listen(8080);
+app.get('/hello/:name', (req, res) => {
+	res.writeHead(200, {'Content-Type': 'text/plain'});
+	res.write(`Hello ${req.params.name}`);
+	res.end();
+})
+
+const server = app.listen(8080, () => {
+	const host = server.address().address;
+	const port = server.address().port;
+
+	console.log(`Demo app listening on http://${host}:${port}`);
+});
 
 
